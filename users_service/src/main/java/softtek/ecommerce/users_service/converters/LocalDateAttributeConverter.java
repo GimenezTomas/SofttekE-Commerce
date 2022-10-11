@@ -1,4 +1,4 @@
-package softtek.ecommerce.userservice.converters;
+package softtek.ecommerce.users_service.converters;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
@@ -9,12 +9,12 @@ import java.time.LocalDate;
 public class LocalDateAttributeConverter implements AttributeConverter<LocalDate, Date> {
 
     @Override
-    public Date convertToDatabaseColumn(LocalDate localDate) {
-        return localDate == null ? null : Date.valueOf(localDate);
+    public Date convertToDatabaseColumn( LocalDate localDate ){
+        return localDate == null? null : Date.valueOf(localDate);
     }
 
     @Override
-    public LocalDate convertToEntityAttribute(Date date) {
+    public LocalDate convertToEntityAttribute( Date date ){
         return date == null? null : date.toLocalDate();
     }
 }

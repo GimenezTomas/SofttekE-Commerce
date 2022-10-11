@@ -18,4 +18,10 @@ public class TypeHasAreaKey implements Serializable {
     private String idCustomizationArea;
 
     TypeHasAreaKey(){}
+
+    TypeHasAreaKey( String idCustomizationArea, String idCustomizationType ){
+        super();
+        this.idCustomizationArea = idCustomizationArea;
+        this.idCustomizationType = idCustomizationType;
+    }
 }
