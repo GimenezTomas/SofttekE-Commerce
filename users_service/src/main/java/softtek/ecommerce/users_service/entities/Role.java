@@ -1,5 +1,6 @@
 package softtek.ecommerce.users_service.entities;
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -22,10 +23,15 @@ public class Role {
     @Column( name = "name" ) @NotBlank
     private String name;
 
-    @OneToMany( mappedBy = "role" )
+    @OneToMany( mappedBy = "role", fetch = FetchType.LAZY)
     private Set<User> users;
 
-    @ManyToMany( mappedBy = "roles" )
+    @ManyToMany
+    @JoinTable(
+            name = "roles_has_permissions",
+            joinColumns = @JoinColumn( name = "id_role" ),
+            inverseJoinColumns = @JoinColumn( name = "id_permission" )
+    )
     private Set<Permission> permissions;
 
     public Role() {

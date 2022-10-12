@@ -1,5 +1,6 @@
 package softtek.ecommerce.users_service.entities;
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -22,21 +23,10 @@ public class Permission {
     @Column( name = "name" ) @NotBlank
     private String name;
 
-    @ManyToMany
-    @JoinTable(
-            name = "roles_has_permissions",
-            joinColumns = @JoinColumn( name = "id_permission" ),
-            inverseJoinColumns = @JoinColumn( name = "id_role" )
-    )
-    private Set<Role> roles;
-
-    Permission() {
-        this.roles = new HashSet<>();
-    }
+    Permission() {}
 
     Permission( String name ) {
         super();
         this.name = name;
-        this.roles = new HashSet<>();
     }
 }
