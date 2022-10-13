@@ -21,17 +21,24 @@ public class PaymentMethod {
     @Column( name = "name" ) @NotBlank
     private String name;
 
+    @Column( name = "active" )
+    private Boolean active;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn( name = "id_shop", nullable = false )
     private Shop shop;
 
-    PaymentMethod(){}
+    PaymentMethod(){
+        super();
+        this.active = true;
+    }
 
     PaymentMethod( String name, Shop shop ){
         super();
         this.name = name;
         this.shop = shop;
+        this.active = true;
     }
 }
 

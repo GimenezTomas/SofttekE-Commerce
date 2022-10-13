@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,21 +14,24 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table( name = "shops" )
-public class Shop {
+@Table( name = "customizations" )
+public class Customization {
     @Id
-    @Column( name = "id_shop" ) @GeneratedValue(generator = "UUID")
+    @Column( name = "id_customization" ) @GeneratedValue(generator = "UUID")
     @GenericGenerator( name = "UUID", strategy = "org.hibernate.id.UUIDGenerator" )
-    private String id_shop;
+    private String id_customization;
 
     @Column( name = "name" ) @NotBlank
     private String name;
 
+    @Column( name = "price" ) @NotNull
+    private float price;
+
     @Column( name = "description" ) @NotBlank
     private String description;
 
-    @Column( name = "id_user" ) @NotBlank
-    private String id_user;
+    @Column( name = "id_customization_type" ) @NotBlank
+    private String id_customization_type;
 
     @Column( name = "created_at", columnDefinition = "DATE") @NotBlank
     private LocalDate createdAt;
@@ -38,33 +42,27 @@ public class Shop {
     @Column( name = "active" )
     private Boolean active;
 
-    @OneToMany( mappedBy = "shop", fetch = FetchType.LAZY)
-    private Set<PaymentMethod> paymentMethods;
+    @OneToMany( mappedBy = "customization", fetch = FetchType.LAZY)
+    private Set<AreaHasCustomization> areas;
 
-    @OneToMany( mappedBy = "shop", fetch = FetchType.LAZY)
+    @OneToMany( mappedBy = "customization", fetch = FetchType.LAZY)
     private Set<CustomizatedProduct> customizatedProducts;
 
-    @OneToMany( mappedBy = "shop", fetch = FetchType.LAZY)
-    private Set<Post> posts;
-
-    Shop(){
+    Customization(){
         super();
         this.active = true;
         this.createdAt = LocalDate.now();
-        this.posts = new HashSet<>();
-        this.paymentMethods = new HashSet<>();
         this.customizatedProducts = new HashSet<>();
     }
 
-    Shop( String name, String description, String id_user ){
+    Customization( String name, String description, String id_customization_type, float price ){
         super();
+        this.customizatedProducts = new HashSet<>();
         this.active = true;
         this.createdAt = LocalDate.now();
         this.name = name;
         this.description = description;
-        this.id_user = id_user;
-        this.posts = new HashSet<>();
-        this.paymentMethods = new HashSet<>();
-        this.customizatedProducts = new HashSet<>();
+        this.id_customization_type = id_customization_type;
+        this.price = price;
     }
 }
