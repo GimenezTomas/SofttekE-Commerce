@@ -34,26 +34,21 @@ public class Post {
     @Column( name = "active" )
     private Boolean active;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn( name = "id_shop", nullable = false )
     private Shop shop;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn( name = "id_customizated_product", nullable = false )
     private CustomizatedProduct customizatedProduct;
 
     Post(){
-        super();
         this.active = true;
         this.createdAt = LocalDate.now();
     }
 
     Post( String state, String description ){
-        super();
-        this.active = true;
-        this.createdAt = LocalDate.now();
+        this();
         this.state = state;
         this.description = description;
     }

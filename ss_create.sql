@@ -7,13 +7,13 @@ CREATE TABLE `areas_has_customizations` (
 
 CREATE TABLE `customizated_products` (
   `id_customizated_product` varchar(255) NOT NULL,
-  `price` float NOT NULL,
   `name` varchar(45) NOT NULL,
   `id_shop` varchar(255) NOT NULL,
   `id_base_product` varchar(255) DEFAULT NULL,
   `id_customization` varchar(255) NOT NULL,
   `created_at` date NOT NULL,
   `updated_at` date DEFAULT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id_customizated_product`,`id_shop`,`id_customization`),
   UNIQUE KEY `id_customizated_product_UNIQUE` (`id_customizated_product`),
   KEY `fk_customizated_products_shops1_idx` (`id_shop`),
@@ -30,6 +30,7 @@ CREATE TABLE `customizations` (
   `id_customization_type` varchar(255) NOT NULL,
   `created_at` date NOT NULL,
   `updated_at` date DEFAULT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id_customization`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
@@ -37,6 +38,7 @@ CREATE TABLE `payment_methods` (
   `id_payment_method` varchar(255) NOT NULL,
   `name` varchar(45) DEFAULT NULL,
   `id_shop` varchar(255) NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id_payment_method`,`id_shop`),
   UNIQUE KEY `id_payments_methods_UNIQUE` (`id_payment_method`),
   KEY `fk_payments_methods_shops1_idx` (`id_shop`),
@@ -50,6 +52,8 @@ CREATE TABLE `posts` (
   `id_shop` varchar(255) NOT NULL,
   `created_at` date NOT NULL,
   `updated_at` date DEFAULT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT '1',
+  `description` varchar(245) NOT NULL,
   PRIMARY KEY (`id_post`,`id_customizated_product`,`id_shop`),
   UNIQUE KEY `id_post_UNIQUE` (`id_post`),
   KEY `fk_posts_customizated_products1_idx` (`id_customizated_product`),
@@ -65,6 +69,7 @@ CREATE TABLE `shops` (
   `description` varchar(245) NOT NULL,
   `created_at` date NOT NULL,
   `updated_at` date DEFAULT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id_shop`),
   UNIQUE KEY `id_shop_UNIQUE` (`id_shop`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;

@@ -1,5 +1,6 @@
 package softtek.ecommerce.shops_service.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -29,7 +30,7 @@ public class Shop {
     @Column( name = "id_user" ) @NotBlank
     private String id_user;
 
-    @Column( name = "created_at", columnDefinition = "DATE") @NotBlank
+    @Column( name = "created_at", columnDefinition = "DATE")
     private LocalDate createdAt;
 
     @Column( name = "updated_at", columnDefinition = "DATE")
@@ -38,17 +39,19 @@ public class Shop {
     @Column( name = "active" )
     private Boolean active;
 
+    @JsonIgnore
     @OneToMany( mappedBy = "shop", fetch = FetchType.LAZY)
     private Set<PaymentMethod> paymentMethods;
 
+    @JsonIgnore
     @OneToMany( mappedBy = "shop", fetch = FetchType.LAZY)
     private Set<CustomizatedProduct> customizatedProducts;
 
+    @JsonIgnore
     @OneToMany( mappedBy = "shop", fetch = FetchType.LAZY)
     private Set<Post> posts;
 
     Shop(){
-        super();
         this.active = true;
         this.createdAt = LocalDate.now();
         this.posts = new HashSet<>();
@@ -57,14 +60,9 @@ public class Shop {
     }
 
     Shop( String name, String description, String id_user ){
-        super();
-        this.active = true;
-        this.createdAt = LocalDate.now();
+        this();
         this.name = name;
         this.description = description;
         this.id_user = id_user;
-        this.posts = new HashSet<>();
-        this.paymentMethods = new HashSet<>();
-        this.customizatedProducts = new HashSet<>();
     }
 }

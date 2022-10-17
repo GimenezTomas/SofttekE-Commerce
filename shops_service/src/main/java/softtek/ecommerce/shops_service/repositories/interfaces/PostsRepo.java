@@ -12,6 +12,4 @@ public interface PostsRepo extends JpaRepository<Post, String> {
 
     @Override @RestResource( exported = false )
     void delete(Post entity);
-
-    Post findByName(String name );
 }

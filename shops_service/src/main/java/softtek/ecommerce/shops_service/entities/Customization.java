@@ -27,13 +27,13 @@ public class Customization {
     @Column( name = "price" ) @NotNull
     private float price;
 
-    @Column( name = "description" ) @NotBlank
-    private String description;
+    @Column( name = "content" ) @NotBlank
+    private String content;
 
     @Column( name = "id_customization_type" ) @NotBlank
     private String id_customization_type;
 
-    @Column( name = "created_at", columnDefinition = "DATE") @NotBlank
+    @Column( name = "created_at", columnDefinition = "DATE")
     private LocalDate createdAt;
 
     @Column( name = "updated_at", columnDefinition = "DATE")
@@ -49,19 +49,15 @@ public class Customization {
     private Set<CustomizatedProduct> customizatedProducts;
 
     Customization(){
-        super();
         this.active = true;
         this.createdAt = LocalDate.now();
         this.customizatedProducts = new HashSet<>();
     }
 
-    Customization( String name, String description, String id_customization_type, float price ){
-        super();
-        this.customizatedProducts = new HashSet<>();
-        this.active = true;
-        this.createdAt = LocalDate.now();
+    Customization( String name, String content, String id_customization_type, float price ){
+        this();
         this.name = name;
-        this.description = description;
+        this.content = content;
         this.id_customization_type = id_customization_type;
         this.price = price;
     }

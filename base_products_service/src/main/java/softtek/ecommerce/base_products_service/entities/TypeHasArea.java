@@ -22,12 +22,11 @@ public class TypeHasArea {
     private boolean active;
 
     TypeHasArea(){
-        super();
         this.active = true;
     }
 
     TypeHasArea( CustomizationType customizationType, CustomizationArea customizationArea ){
-        super();
+        this();
         this.customizationArea = customizationArea;
         this.customizationType = customizationType;
     }

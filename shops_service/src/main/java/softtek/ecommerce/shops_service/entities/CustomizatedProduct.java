@@ -48,18 +48,14 @@ public class CustomizatedProduct {
     private Set<Post> posts;
 
     CustomizatedProduct(){
-        super();
         this.active = true;
         this.createdAt = LocalDate.now();
         this.posts = new HashSet<>();
     }
 
     CustomizatedProduct( String name, String description, String id_base_product ){
-        super();
-        this.active = true;
-        this.createdAt = LocalDate.now();
+        this();
         this.name = name;
         this.id_base_product = id_base_product;
-        this.posts = new HashSet<>();
     }
 }

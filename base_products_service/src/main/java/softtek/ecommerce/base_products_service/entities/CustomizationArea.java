@@ -27,13 +27,12 @@ public class CustomizationArea {
     @OneToMany( mappedBy = "customizationType" )
     Set<TypeHasArea> typesHasAreas;
 
-    public CustomizationArea( String name ){
-        super();
-        this.name = name;
+    public CustomizationArea(){
         this.active = true;
     }
 
-    public CustomizationArea(){
-        this.active = true;
+    public CustomizationArea( String name ){
+        this();
+        this.name = name;
     }
 }

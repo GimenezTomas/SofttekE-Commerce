@@ -10,6 +10,8 @@ import softtek.ecommerce.users_service.repositories.interfaces.RolesRepo;
 import softtek.ecommerce.users_service.repositories.interfaces.UsersRepo;
 
 import javax.validation.Valid;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 @RestController
 @RequestMapping("/users")

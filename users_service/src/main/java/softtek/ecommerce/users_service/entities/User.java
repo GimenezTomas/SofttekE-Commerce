@@ -31,18 +31,21 @@ public class User {
     @Column( name = "updated_at", columnDefinition = "DATE" )
     private LocalDate updatedAt;
 
-    @JsonIgnore
+    @Column( name = "active" )
+    private Boolean active;
+
     @ManyToOne
     @JoinColumn( name = "id_role", nullable = false )
     private Role role;
 
     public User(){
         this.createdAt = LocalDate.now();
+        this.active = true;
     }
 
     public User( String email, String password ){
+        this();
         this.email = email;
         this.password = password;
-        this.createdAt = LocalDate.now();
     }
 }

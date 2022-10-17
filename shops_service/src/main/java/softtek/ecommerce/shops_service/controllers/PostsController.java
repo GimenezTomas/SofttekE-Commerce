@@ -21,11 +21,6 @@ public class PostsController {
         return repo.findAll( page );
     }
 
-    @GetMapping("/{name}")
-    Post post( @PathVariable( value = "name" ) String name ){
-        return repo.findByName( name );
-    }
-
     @PostMapping("")
     String createPost(@RequestBody @Valid Post post ){
         //VALIDATIONS

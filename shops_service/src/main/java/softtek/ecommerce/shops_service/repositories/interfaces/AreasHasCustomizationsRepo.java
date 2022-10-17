@@ -6,10 +6,10 @@ import org.springframework.data.rest.core.annotation.RestResource;
 import softtek.ecommerce.shops_service.entities.AreaHasCustomization;
 import softtek.ecommerce.shops_service.entities.PaymentMethod;
 
+import java.io.Serializable;
+
 @RepositoryRestResource( path = "areas_has_customizations" )
-public interface AreasHasCustomizationsRepo extends JpaRepository<AreaHasCustomization, String> {
-    @Override @RestResource( exported = false )
-    void deleteById(String id);
+public interface AreasHasCustomizationsRepo extends JpaRepository<AreaHasCustomization, Serializable> {
 
     @Override @RestResource( exported = false )
     void delete(AreaHasCustomization entity);

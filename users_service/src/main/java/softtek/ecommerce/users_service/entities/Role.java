@@ -23,15 +23,11 @@ public class Role {
     @Column( name = "name" ) @NotBlank
     private String name;
 
+    @JsonIgnore
     @OneToMany( mappedBy = "role", fetch = FetchType.LAZY)
     private Set<User> users;
 
     @ManyToMany
-    @JoinTable(
-            name = "roles_has_permissions",
-            joinColumns = @JoinColumn( name = "id_role" ),
-            inverseJoinColumns = @JoinColumn( name = "id_permission" )
-    )
     private Set<Permission> permissions;
 
     public Role() {
@@ -40,8 +36,16 @@ public class Role {
     }
 
     public Role( String name ){
-        super();
+        this();
         this.name = name;
-        this.users = new HashSet<>();
     }
+
+    public void addPermission( Permission permission ){
+        this.permissions.add(permission);
+    }
+
+    public void removePermission( Permission permissionForRemove ){
+        this.permissions.stream().filter( permission -> permission.getId_permission().equals(permissionForRemove.getId_permission()) );
+    }
+
 }

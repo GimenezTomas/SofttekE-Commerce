@@ -28,9 +28,8 @@ public class CustomizationType {
     Set<TypeHasArea> typesHasAreas;
 
     public CustomizationType( String name ){
-        super();
+        this();
         this.name = name;
-        this.active = true;
     }
 
     public CustomizationType(){
