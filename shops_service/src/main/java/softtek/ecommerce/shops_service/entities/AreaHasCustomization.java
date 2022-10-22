@@ -11,19 +11,18 @@ import java.io.Serializable;
 @Entity
 @Table( name = "areas_has_customizations" )
 public class AreaHasCustomization {
-    @Id
-    @Column( name = "id_customization_area" )
-    private String idCustomizationArea;
+    @EmbeddedId
+    private AreaHasCustomizationId areaHasCustomizationId;
 
     @ManyToOne
-    @MapsId
     @JoinColumn( name = "id_customization" )
+    @MapsId("idCustomization")
     private Customization customization;
 
     AreaHasCustomization(){}
 
-    AreaHasCustomization(Customization customization, String idCustomizationArea  ){
-        this.idCustomizationArea = idCustomizationArea;
+    public AreaHasCustomization(Customization customization, AreaHasCustomizationId areaHasCustomizationId){
+        this.areaHasCustomizationId = areaHasCustomizationId;
         this.customization = customization;
     }
 }

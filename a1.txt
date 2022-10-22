@@ -1,0 +1,2 @@
+Al momento de crear un producto customizado yo deberia verificar en la base de base_products que el id_type y 
+TODOS los id_area relacionados a esa custimizacion se puedan hacer en ese producto_base

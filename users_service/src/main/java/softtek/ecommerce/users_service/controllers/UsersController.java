@@ -3,6 +3,8 @@ package softtek.ecommerce.users_service.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import softtek.ecommerce.users_service.entities.Role;
 import softtek.ecommerce.users_service.entities.User;
@@ -30,11 +32,12 @@ public class UsersController {
     }
 
     @PostMapping("")
-    String createUser(@RequestBody @Valid User user ){
-        //VALIDATIONS
-        //TODO
+    @ResponseBody
+    ResponseEntity<Object> createUser(@RequestBody @Valid User user ) throws Exception{
+        if ( this.repo.findByEmail(user.getEmail()) != null )
+            return new ResponseEntity<Object>("User already exists", HttpStatus.CONFLICT);
         this.repo.save(user);
 
-        return "ok";
+        return ResponseEntity.ok().build();
     }
 }

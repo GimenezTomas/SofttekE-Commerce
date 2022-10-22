@@ -19,7 +19,7 @@ public class Customization {
     @Id
     @Column( name = "id_customization" ) @GeneratedValue(generator = "UUID")
     @GenericGenerator( name = "UUID", strategy = "org.hibernate.id.UUIDGenerator" )
-    private String id_customization;
+    private String idCustomization;
 
     @Column( name = "name" ) @NotBlank
     private String name;
@@ -31,7 +31,7 @@ public class Customization {
     private String content;
 
     @Column( name = "id_customization_type" ) @NotBlank
-    private String id_customization_type;
+    private String idCustomizationType;
 
     @Column( name = "created_at", columnDefinition = "DATE")
     private LocalDate createdAt;
@@ -58,7 +58,7 @@ public class Customization {
         this();
         this.name = name;
         this.content = content;
-        this.id_customization_type = id_customization_type;
+        this.idCustomizationType = id_customization_type;
         this.price = price;
     }
 }
