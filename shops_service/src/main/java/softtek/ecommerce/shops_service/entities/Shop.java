@@ -19,7 +19,7 @@ public class Shop {
     @Id
     @Column( name = "id_shop" ) @GeneratedValue(generator = "UUID")
     @GenericGenerator( name = "UUID", strategy = "org.hibernate.id.UUIDGenerator" )
-    private String id_shop;
+    private String idShop;
 
     @Column( name = "name" ) @NotBlank
     private String name;
@@ -28,7 +28,7 @@ public class Shop {
     private String description;
 
     @Column( name = "id_user" ) @NotBlank
-    private String id_user;
+    private String idUser;
 
     @Column( name = "created_at", columnDefinition = "DATE")
     private LocalDate createdAt;
@@ -51,18 +51,23 @@ public class Shop {
     @OneToMany( mappedBy = "shop", fetch = FetchType.LAZY)
     private Set<Post> posts;
 
+    @JsonIgnore
+    @OneToMany( mappedBy = "shop", fetch = FetchType.LAZY )
+    private Set<Customization> customization;
+
     Shop(){
         this.active = true;
         this.createdAt = LocalDate.now();
         this.posts = new HashSet<>();
         this.paymentMethods = new HashSet<>();
         this.customizatedProducts = new HashSet<>();
+        this.customization = new HashSet<>();
     }
 
     Shop( String name, String description, String id_user ){
         this();
         this.name = name;
         this.description = description;
-        this.id_user = id_user;
+        this.idUser = id_user;
     }
 }

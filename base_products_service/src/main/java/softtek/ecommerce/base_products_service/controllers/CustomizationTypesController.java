@@ -8,6 +8,7 @@ import softtek.ecommerce.base_products_service.entities.CustomizationType;
 import softtek.ecommerce.base_products_service.repositories.interfaces.CustomizationTypesRepo;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController()
 @RequestMapping("/customization_types")
@@ -21,9 +22,9 @@ public class CustomizationTypesController {
         return repo.findAll( page );
     }
 
-    @GetMapping("/{name}")
-    CustomizationType customizationType( @PathVariable( value = "name" ) String name ){
-        return repo.findByNameAndActive( name, true );
+    @GetMapping("/{idCustomizationType}")
+    Optional<CustomizationType> customizationType( @PathVariable( value = "idCustomizationType" ) String idCustomizationType ){
+        return repo.findById( idCustomizationType );
     }
 
     @PostMapping("")

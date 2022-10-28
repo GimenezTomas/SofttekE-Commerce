@@ -1,5 +1,9 @@
 13 DE OCTUBRE	MIN 15, EXPLICA OVERRIDE Y RESPONSE BODY
 	      	MIN 60, PUT
-
+		MIN 1:53 Los getters y setters de las listas deberian de retornar un nuevo array para obligar a usar la funcion add
+		MIN 1:58 Toca temas excepciones
 
 1:47
+
+problemas:
+	1) EN transactional tnego que usar el save igualmente xq cuando agrego un permiso no me lo guarda

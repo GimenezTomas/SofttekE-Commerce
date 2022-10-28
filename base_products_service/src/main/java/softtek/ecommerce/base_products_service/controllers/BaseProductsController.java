@@ -1,6 +1,5 @@
 package softtek.ecommerce.base_products_service.controllers;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -10,7 +9,7 @@ import softtek.ecommerce.base_products_service.entities.BaseProduct;
 import softtek.ecommerce.base_products_service.repositories.interfaces.BaseProductsRepo;
 
 import javax.validation.Valid;
-import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/base_products")
@@ -30,9 +29,9 @@ public class BaseProductsController {
         return repo.findAll( page );
     }
 
-    @GetMapping("/{name}")
-    BaseProduct baseProduct( @PathVariable( value = "name" ) String name ){
-        return repo.findByNameAndActive( name, true );
+    @GetMapping("/{idBaseProduct}")
+    Optional<BaseProduct> baseProduct( @PathVariable( value = "idBaseProduct" ) String idBaseProduct ){
+        return repo.findById( idBaseProduct );
     }
 
     @PostMapping("")

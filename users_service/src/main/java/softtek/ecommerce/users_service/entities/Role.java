@@ -52,30 +52,14 @@ public class Role {
         return new HashSet<>( permissions );
     }
 
-    public void addPermission( String namePermissionRequired, Permission permission ) throws PermissionInvalidException {
-        if ( this.permissions.stream().noneMatch( permission1 -> permission1.getName().equals( namePermissionRequired )) )
-            throw new PermissionInvalidException( namePermissionRequired + " is necesary", permission.getName() );
+    public void addPermission( Permission permission ) throws PermissionInvalidException {
         if ( this.permissions.stream().noneMatch( permission1 -> permission1.getId_permission().equals(permission.getId_permission()) ))
             this.permissions.add(permission);
         else
             throw new PermissionInvalidException( " is already inside the role", permission.getName() );
     }
 
-    public void removePermission( String namePermissionRequired, Permission permissionForRemove ) throws PermissionInvalidException {
-        if ( this.permissions.stream().noneMatch( permission1 -> permission1.getName().equals( namePermissionRequired )) )
-            throw new PermissionInvalidException( namePermissionRequired + " is necesary", permissionForRemove.getName() );
-
+    public void removePermission( Permission permissionForRemove ) throws PermissionInvalidException {
         this.permissions.removeIf( permission -> permission.getId_permission().equals(permissionForRemove.getId_permission()));
     }
-
-    /*public void addUser( User user ) throws UserInvalidException {
-        if ( this.users.stream().noneMatch( user1 -> user1.getId_user().equals(user.getId_user())) )
-            this.users.add( user );
-        else
-            throw new UserInvalidException();
-    }
-
-    public void removeUser( User user ){
-        this.users.stream().filter( user1 -> user1.getId_user().equals(user.getId_user()) );
-    }*/
 }

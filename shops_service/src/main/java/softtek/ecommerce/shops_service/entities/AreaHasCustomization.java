@@ -1,5 +1,6 @@
 package softtek.ecommerce.shops_service.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,7 @@ public class AreaHasCustomization {
     @EmbeddedId
     private AreaHasCustomizationId areaHasCustomizationId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn( name = "id_customization" )
     @MapsId("idCustomization")

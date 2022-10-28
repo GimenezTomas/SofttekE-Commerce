@@ -1,6 +1,5 @@
 package softtek.ecommerce.shops_service.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -16,7 +15,7 @@ public class PaymentMethod {
     @Id
     @Column( name = "id_payment_method" ) @GeneratedValue(generator = "UUID")
     @GenericGenerator( name = "UUID", strategy = "org.hibernate.id.UUIDGenerator" )
-    private String id_payment_method;
+    private String idPaymentMethod;
 
     @Column( name = "name" ) @NotBlank
     private String name;
@@ -32,10 +31,9 @@ public class PaymentMethod {
         this.active = true;
     }
 
-    PaymentMethod( String name, Shop shop ){
+    public PaymentMethod( String name ){
         this();
         this.name = name;
-        this.shop = shop;
     }
 }
 

@@ -8,6 +8,7 @@ import softtek.ecommerce.base_products_service.entities.CustomizationArea;
 import softtek.ecommerce.base_products_service.repositories.interfaces.CustomizationAreasRepo;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/customization_areas")
@@ -21,9 +22,9 @@ public class CustomizationAreasController {
         return repo.findAll( page );
     }
 
-    @GetMapping("/{name}")
-    CustomizationArea customizationArea( @PathVariable( value = "name" ) String name ){
-        return repo.findByNameAndActive( name, true );
+    @GetMapping("/{idArea}")
+    Optional<CustomizationArea> customizationArea( @PathVariable( value = "idArea" ) String idArea ){
+        return repo.findById(idArea);
     }
 
     @PostMapping("")

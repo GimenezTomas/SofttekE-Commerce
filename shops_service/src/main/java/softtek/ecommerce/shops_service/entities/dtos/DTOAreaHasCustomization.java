@@ -11,6 +11,6 @@ import java.util.Optional;
 @Getter
 @Setter
 public class DTOAreaHasCustomization {
-    private Customization customization;
+    private String idCustomization;
     private String idCustomizationArea;
 }

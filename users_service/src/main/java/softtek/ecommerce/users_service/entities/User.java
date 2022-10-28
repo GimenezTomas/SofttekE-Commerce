@@ -5,6 +5,8 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -38,6 +40,13 @@ public class User {
     @JoinColumn( name = "id_role", nullable = false )
     private Role role;
 
+    /*@Autowired
+    BCryptPasswordEncoder encoder;
+
+    public void setPassword(String password) {
+        this.password = encoder.encode(password);
+    }*/
+
     public User(){
         this.createdAt = LocalDate.now();
         this.active = true;
@@ -46,6 +55,12 @@ public class User {
     public User( String email, String password ){
         this();
         this.email = email;
-        this.password = password;
+        this.password = password;//encoder.encode(password);
+    }
+    public User( String email, String password, Role role ){
+        this();
+        this.role = role;
+        this.email = email;
+        this.password = password;//encoder.encode(password);
     }
 }

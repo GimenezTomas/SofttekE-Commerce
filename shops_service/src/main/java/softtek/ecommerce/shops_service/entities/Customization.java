@@ -1,5 +1,6 @@
 package softtek.ecommerce.shops_service.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -45,8 +46,13 @@ public class Customization {
     @OneToMany( mappedBy = "customization", fetch = FetchType.LAZY)
     private Set<AreaHasCustomization> areas;
 
+    @JsonIgnore
     @OneToMany( mappedBy = "customization", fetch = FetchType.LAZY)
     private Set<CustomizatedProduct> customizatedProducts;
+
+    @ManyToOne
+    @JoinColumn(name = "id_shop")
+    private Shop shop;
 
     Customization(){
         this.active = true;
@@ -54,7 +60,7 @@ public class Customization {
         this.customizatedProducts = new HashSet<>();
     }
 
-    Customization( String name, String content, String id_customization_type, float price ){
+    public Customization(String name, String content, String id_customization_type, float price){
         this();
         this.name = name;
         this.content = content;

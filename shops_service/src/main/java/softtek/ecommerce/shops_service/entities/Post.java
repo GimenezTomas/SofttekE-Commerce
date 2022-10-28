@@ -1,6 +1,5 @@
 package softtek.ecommerce.shops_service.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -19,13 +18,12 @@ public class Post {
     @GenericGenerator( name = "UUID", strategy = "org.hibernate.id.UUIDGenerator" )
     private String id_post;
 
-    @Column( name = "state" ) @NotBlank//enumerado?
-    private String state;
+    private State state;
 
     @Column( name = "description" ) @NotBlank
     private String description;
 
-    @Column( name = "created_at", columnDefinition = "DATE") @NotBlank
+    @Column( name = "created_at", columnDefinition = "DATE")
     private LocalDate createdAt;
 
     @Column( name = "updated_at", columnDefinition = "DATE")
@@ -45,11 +43,11 @@ public class Post {
     Post(){
         this.active = true;
         this.createdAt = LocalDate.now();
+        this.state = State.ACTIVE;
     }
 
-    Post( String state, String description ){
+    public Post(String description){
         this();
-        this.state = state;
         this.description = description;
     }
 
