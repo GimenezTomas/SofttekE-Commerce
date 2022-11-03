@@ -19,5 +19,6 @@ public interface PostsRepo extends JpaRepository<Post, String> {
 
     @Query(value = "select * from posts p where p.id_customizated_product = :id and active = 1 limit 1", nativeQuery = true)
     Optional<Post> findByCustomizatedProductById( @Param("id") String idCustomizatedProduct );
+
     //Optional<Post> findOneByCustomizatedProductId_Customizated_Product(String idCustomizatedProduct );
 }

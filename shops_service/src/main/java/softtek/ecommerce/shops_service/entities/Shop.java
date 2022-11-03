@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,13 +22,16 @@ public class Shop {
     @GenericGenerator( name = "UUID", strategy = "org.hibernate.id.UUIDGenerator" )
     private String idShop;
 
-    @Column( name = "name" ) @NotBlank
+    @NotBlank @NotNull
+    @Column( name = "name" )
     private String name;
 
-    @Column( name = "description" ) @NotBlank
+    @NotBlank @NotNull
+    @Column( name = "description" )
     private String description;
 
-    @Column( name = "id_user" ) @NotBlank
+    @NotBlank @NotNull
+    @Column( name = "id_user" )
     private String idUser;
 
     @Column( name = "created_at", columnDefinition = "DATE")

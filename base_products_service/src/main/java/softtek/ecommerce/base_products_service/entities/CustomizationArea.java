@@ -1,5 +1,6 @@
 package softtek.ecommerce.base_products_service.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -24,6 +25,7 @@ public class CustomizationArea {
     @Column( name = "active" )
     private Boolean active;
 
+    @JsonIgnore
     @OneToMany( mappedBy = "customizationType" )
     Set<TypeHasArea> typesHasAreas;
 

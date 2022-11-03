@@ -22,16 +22,20 @@ public class Customization {
     @GenericGenerator( name = "UUID", strategy = "org.hibernate.id.UUIDGenerator" )
     private String idCustomization;
 
-    @Column( name = "name" ) @NotBlank
+    @NotBlank @NotNull
+    @Column( name = "name" )
     private String name;
 
-    @Column( name = "price" ) @NotNull
+    @NotNull
+    @Column( name = "price" )
     private float price;
 
-    @Column( name = "content" ) @NotBlank
+    @NotBlank @NotNull
+    @Column( name = "content" )
     private String content;
 
-    @Column( name = "id_customization_type" ) @NotBlank
+    @NotBlank @NotNull
+    @Column( name = "id_customization_type" )
     private String idCustomizationType;
 
     @Column( name = "created_at", columnDefinition = "DATE")
@@ -43,12 +47,13 @@ public class Customization {
     @Column( name = "active" )
     private Boolean active;
 
-    @OneToMany( mappedBy = "customization", fetch = FetchType.LAZY)
-    private Set<AreaHasCustomization> areas;
-
     @JsonIgnore
     @OneToMany( mappedBy = "customization", fetch = FetchType.LAZY)
-    private Set<CustomizatedProduct> customizatedProducts;
+    private Set<AreaHasCustomization> areas;
+/*
+    @JsonIgnore
+    @OneToMany( mappedBy = "customization", fetch = FetchType.LAZY)
+    private Set<CustomizatedProduct> customizatedProducts;*/
 
     @ManyToOne
     @JoinColumn(name = "id_shop")
@@ -57,7 +62,7 @@ public class Customization {
     Customization(){
         this.active = true;
         this.createdAt = LocalDate.now();
-        this.customizatedProducts = new HashSet<>();
+        //this.customizatedProducts = new HashSet<>();
     }
 
     public Customization(String name, String content, String id_customization_type, float price){

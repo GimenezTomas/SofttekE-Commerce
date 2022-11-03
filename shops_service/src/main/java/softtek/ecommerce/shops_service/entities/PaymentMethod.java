@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -17,7 +18,8 @@ public class PaymentMethod {
     @GenericGenerator( name = "UUID", strategy = "org.hibernate.id.UUIDGenerator" )
     private String idPaymentMethod;
 
-    @Column( name = "name" ) @NotBlank
+    @NotBlank @NotNull
+    @Column( name = "name" )
     private String name;
 
     @Column( name = "active" )

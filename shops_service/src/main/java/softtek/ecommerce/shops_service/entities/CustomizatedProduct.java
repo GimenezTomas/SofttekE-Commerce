@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,10 +22,12 @@ public class CustomizatedProduct {
     @GenericGenerator( name = "UUID", strategy = "org.hibernate.id.UUIDGenerator" )
     private String idCustomizatedProduct;
 
-    @Column( name = "name" ) @NotBlank
+    @NotBlank @NotNull
+    @Column( name = "name" )
     private String name;
 
-    @Column( name = "id_base_product" ) @NotBlank
+    @NotBlank @NotNull
+    @Column( name = "id_base_product" )
     private String idBaseProduct;
 
     @Column( name = "created_at", columnDefinition = "DATE")
@@ -36,9 +39,13 @@ public class CustomizatedProduct {
     @Column( name = "active" )
     private Boolean active;
 
-    @ManyToOne
+/*    @ManyToOne
     @JoinColumn( name = "id_customization", nullable = false )
     private Customization customization;
+*/
+    @ManyToMany
+    private Set<AreaHasCustomization> areaHasCustomizations;
+
 
     @ManyToOne
     @JoinColumn( name = "id_shop", nullable = false )
@@ -52,6 +59,7 @@ public class CustomizatedProduct {
         this.active = true;
         this.createdAt = LocalDate.now();
         this.posts = new HashSet<>();
+        this.areaHasCustomizations = new HashSet<>();
     }
 
     public CustomizatedProduct( String name, String id_base_product ){

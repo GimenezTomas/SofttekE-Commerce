@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Getter
@@ -20,7 +21,8 @@ public class Post {
 
     private State state;
 
-    @Column( name = "description" ) @NotBlank
+    @NotBlank @NotNull
+    @Column( name = "description" )
     private String description;
 
     @Column( name = "created_at", columnDefinition = "DATE")

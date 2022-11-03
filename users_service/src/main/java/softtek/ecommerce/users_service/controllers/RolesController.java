@@ -33,8 +33,7 @@ public class RolesController {
     }
 
     @PostMapping("")
-    @ResponseBody
-    ResponseEntity<Object> createRole(@RequestBody @Valid Role role ) throws Exception{
+    @ResponseBody ResponseEntity<Object> createRole(@RequestBody @Valid Role role ) throws Exception{
         if ( this.repo.findByName(role.getName()) != null )
             return new ResponseEntity<Object>("Role already exists", HttpStatus.CONFLICT);
         this.repo.save(role);

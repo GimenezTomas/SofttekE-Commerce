@@ -1,12 +1,17 @@
 package softtek.ecommerce.base_products_service.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
+@Getter
+@Setter
 @Entity
 @Table( name = "type_has_area" )
 public class TypeHasArea {
     @EmbeddedId
-    private TypeHasAreaKey id;
+    private TypeHasAreaKey idTypeHasArea;
 
     @ManyToOne
     @MapsId("idCustomizationType")
@@ -25,9 +30,10 @@ public class TypeHasArea {
         this.active = true;
     }
 
-    TypeHasArea( CustomizationType customizationType, CustomizationArea customizationArea ){
+    public TypeHasArea( TypeHasAreaKey typeHasAreaKey, CustomizationType customizationType, CustomizationArea customizationArea ){
         this();
-        this.customizationArea = customizationArea;
+        this.idTypeHasArea = typeHasAreaKey;
         this.customizationType = customizationType;
+        this.customizationArea = customizationArea;
     }
 }

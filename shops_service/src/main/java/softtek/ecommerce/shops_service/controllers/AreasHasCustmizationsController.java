@@ -16,6 +16,7 @@ import softtek.ecommerce.shops_service.repositories.interfaces.AreasHasCustomiza
 import softtek.ecommerce.shops_service.repositories.interfaces.CustomizationsRepo;
 import softtek.ecommerce.shops_service.services.RestService;
 
+import javax.swing.text.html.Option;
 import javax.validation.Valid;
 import java.util.Optional;
 
@@ -36,17 +37,19 @@ public class AreasHasCustmizationsController {
         return areasHasCustomizationsRepo.findAll( page );
     }
 
-    /*@PostMapping("")
-    String createAreaHasCustomization(@RequestBody @Valid AreaHasCustomization areaHasCustomization ){
-        //VALIDATIONS
-        //TODO
-        this.repo.save( areaHasCustomization );
+    @GetMapping("/byId")
+    Optional<AreaHasCustomization> areaHasCustomizations(@RequestParam String idCustomization, @RequestParam String idArea ){
+        AreaHasCustomizationId areaHasCustomizationId = new AreaHasCustomizationId( idArea, idCustomization );
+        return areasHasCustomizationsRepo.findByAreaHasCustomizationId(areaHasCustomizationId);
+    }
 
-        return "ok";
-    }*/
+    @GetMapping("/byTHA")
+    Optional<AreaHasCustomization> getByTHA( @RequestParam String idArea, @RequestParam String idType ){
+        return areasHasCustomizationsRepo.findByTHA( idArea, idType );
+    }
 
     @PostMapping("")
-    @ResponseBody ResponseEntity<Object> createAreaHasCustomization(@RequestBody DTOAreaHasCustomization dtoAreaHasCustomization ){
+    @ResponseBody ResponseEntity<Object> createAreaHasCustomization(@RequestBody @Valid DTOAreaHasCustomization dtoAreaHasCustomization ){
         Optional<Customization> customizationOptional = customizationsRepo.findById(dtoAreaHasCustomization.getIdCustomization());
 
         if ( !customizationOptional.isPresent() || !customizationOptional.get().getActive() ){

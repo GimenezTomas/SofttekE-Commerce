@@ -8,9 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import softtek.ecommerce.shops_service.entities.PaymentMethod;
 import softtek.ecommerce.shops_service.entities.Shop;
-import softtek.ecommerce.shops_service.repositories.interfaces.PaymentMethodsRepo;
 import softtek.ecommerce.shops_service.repositories.interfaces.ShopsRepo;
 import softtek.ecommerce.shops_service.services.PermissionValidationService;
 import softtek.ecommerce.shops_service.services.RestService;
@@ -36,10 +34,20 @@ public class ShopsController {
         return repo.findAll( page );
     }
 
-    /*@GetMapping("/{name}")
-    Shop shop( @PathVariable( value = "name" ) String name ){
-        return repo.findByName( name );
-    }*/
+    @GetMapping("/{idShop}")
+    Optional<Shop> shopById( @PathVariable( value = "idShop" ) String idShop ){
+        return repo.findById( idShop );
+    }
+
+    @GetMapping("/byIdPost/{idPost}")
+    String idShopByidPost(@PathVariable( value = "idPost" ) String idPost ){
+        return repo.findByIdPost( idPost );
+    }
+
+    @GetMapping("/byIdPaymentMethod/{idPaymentMethod}")
+    String idShopByIdPaymentMethod(@PathVariable( value = "idPaymentMethod" ) String idPaymentMethod ){
+        return repo.findByIdPaymentMethod( idPaymentMethod );
+    }
 
     @GetMapping("/owner")
     Shop shop( @RequestParam( value = "idUser" ) String idUser ){
@@ -51,7 +59,7 @@ public class ShopsController {
     @ResponseBody ResponseEntity<Object> createShop(@RequestBody @Valid Shop shop, @RequestParam String idCurrentUser ) throws Exception {
         final String permission = "CREAR_TIENDA";
         if ( !permissionValidationService.validation( idCurrentUser,permission) )
-            return new ResponseEntity<Object>("The role must have the permission "+permission, HttpStatus.CONFLICT);
+            return new ResponseEntity<>("The role must have the permission "+permission, HttpStatus.CONFLICT);
 
         String userString = restService.getUsersServiceObjectPlainJSON("users/"+shop.getIdUser());
 
@@ -59,14 +67,14 @@ public class ShopsController {
             JsonObject user = new JsonParser().parse( userString ).getAsJsonObject();
 
             if ( !user.get("active").getAsBoolean() )
-                return new ResponseEntity<Object>("The user " + user.get("email").getAsString() + " is not active any more", HttpStatus.CONFLICT);
+                return new ResponseEntity<>("The user " + user.get("email").getAsString() + " is not active any more", HttpStatus.CONFLICT);
         }
         else{
-            return new ResponseEntity<Object>("The user does not exists", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("The user does not exists", HttpStatus.NOT_FOUND);
         }
 
         if ( this.repo.findByIdUser( shop.getIdUser() ).isPresent() )
-            return new ResponseEntity< Object>("The user already has a store", HttpStatus.CONFLICT);
+            return new ResponseEntity<>("The user already has a store", HttpStatus.CONFLICT);
 
         this.repo.save(shop);
 
@@ -75,28 +83,28 @@ public class ShopsController {
 
     @Transactional
     @DeleteMapping("/{idPost}")
-    @ResponseBody ResponseEntity<Object> deleteShop(@PathVariable( value = "idPost" ) String idPost ) throws Exception {
-        /*
-        roleValidationService.validation( dtoPermission.getIdCurrentUser(), "BORRAR_USUARIO");
+    @ResponseBody ResponseEntity<Object> deleteShop(@PathVariable( value = "idPost" ) String idShop, @RequestParam String idCurrentUser ) throws Exception {
+        permissionValidationService.validation( idCurrentUser, "BORRAR_USUARIO");
 
-        Optional<User> user = repo.findById( idUser );
+        Optional<Shop> shopOptional = repo.findById( idShop );
 
-        if ( !user.isPresent() )
-            return new ResponseEntity<Object>("The user " + idUser + " does not exists ", HttpStatus.NOT_FOUND);
+        if ( !shopOptional.isPresent() || !shopOptional.get().getActive() || !shopOptional.get().getIdUser().equals( idCurrentUser ) )
+            return new ResponseEntity<>("The user is not the owner", HttpStatus.CONFLICT);
 
-        String shopString = restService.getShopPlainJSON("owner?idUser="+idUser );
+        if ( shopOptional.get().getCustomizatedProducts().stream().anyMatch( customizatedProduct -> customizatedProduct.getActive()) )
+            return new ResponseEntity<>("The shop has an active customizatedProduct ", HttpStatus.CONFLICT);
 
-        if ( shopString.length() != 0 ){
-            JsonObject shop = new JsonParser().parse( shopString ).getAsJsonObject();
+        if ( shopOptional.get().getCustomization().stream().anyMatch( customization -> customization.getActive()) )
+            return new ResponseEntity<>("The shop has an active customization ", HttpStatus.CONFLICT);
 
-            if ( shop.get("active").getAsBoolean() )
-                return new ResponseEntity<Object>("The user " + user.get().getEmail() + " has an active shop", HttpStatus.CONFLICT);
-        }
+        if ( shopOptional.get().getPaymentMethods().stream().anyMatch( paymentMethod -> paymentMethod.getActive()) )
+            return new ResponseEntity<>("The shop has an active paymentmethod ", HttpStatus.CONFLICT);
 
-        user.get().setActive(false);
-        repo.save(user.get());
-*/  //TODO
-        //hacer validaciones para que no elimine si, hay posteos, medios de pago o productos customizados
+        if ( shopOptional.get().getPosts().stream().anyMatch( post -> post.getActive()) )
+            return new ResponseEntity<>("The shop has an active post", HttpStatus.CONFLICT);
+
+        shopOptional.get().setActive(false);
+        repo.save( shopOptional.get() );
         return ResponseEntity.ok().build();
     }
 }

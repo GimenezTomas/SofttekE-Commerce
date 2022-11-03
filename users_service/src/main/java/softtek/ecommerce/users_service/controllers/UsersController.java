@@ -78,7 +78,7 @@ public class UsersController {
 
         String shopString = restService.getShopPlainJSON("owner?idUser="+idUser );
 
-        if ( shopString.length() != 0 ){
+        if ( shopString != null ){
             JsonObject shop = new JsonParser().parse( shopString ).getAsJsonObject();
 
             if ( shop.get("active").getAsBoolean() )

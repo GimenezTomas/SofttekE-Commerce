@@ -18,6 +18,7 @@ import softtek.ecommerce.shops_service.repositories.interfaces.CustomizatedProdu
 import softtek.ecommerce.shops_service.repositories.interfaces.PostsRepo;
 import softtek.ecommerce.shops_service.repositories.interfaces.ShopsRepo;
 import softtek.ecommerce.shops_service.services.PermissionValidationService;
+import softtek.ecommerce.shops_service.services.RestService;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -40,6 +41,9 @@ public class PostsController {
     ShopsRepo shopsRepo;
 
     @Autowired
+    RestService restService;
+
+    @Autowired
     PermissionValidationService permissionValidationService;
 
     @GetMapping("")
@@ -58,7 +62,7 @@ public class PostsController {
     }
 
     @PostMapping("")
-    @ResponseBody ResponseEntity<Object> createPost(@RequestBody DTOPost dtoPost, @RequestParam String idCurrentUser ) throws Exception {
+    @ResponseBody ResponseEntity<Object> createPost(@RequestBody @Valid DTOPost dtoPost, @RequestParam String idCurrentUser ) throws Exception {
         final String permission = "CREAR_POST";
         if ( !permissionValidationService.validation( idCurrentUser, permission) )
             return new ResponseEntity<Object>("The role must have the permission "+permission, HttpStatus.CONFLICT);
@@ -90,9 +94,14 @@ public class PostsController {
         if ( !postOptional.isPresent() || !postOptional.get().getActive() || !postOptional.get().getShop().getIdUser().equals(idCurrentUser) )
             return new ResponseEntity<Object>("The post does not exists, was deleted or you are not the owner", HttpStatus.NOT_FOUND);
 
+        String obj = restService.getBuyersServiceObjectPlainJSON("items/byPost/"+idPost);
+        if ( obj.length() != 0 || !obj.equals("null") ){
+            return new ResponseEntity<>("The POST has an active ITEM", HttpStatus.CONFLICT);
+        }
+
         postOptional.get().setActive(false);
         repo.save(postOptional.get());
-    //TODO
+
         return ResponseEntity.ok().build();
     }
 }

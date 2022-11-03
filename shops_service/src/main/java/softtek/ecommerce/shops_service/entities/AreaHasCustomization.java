@@ -15,7 +15,6 @@ public class AreaHasCustomization {
     @EmbeddedId
     private AreaHasCustomizationId areaHasCustomizationId;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn( name = "id_customization" )
     @MapsId("idCustomization")

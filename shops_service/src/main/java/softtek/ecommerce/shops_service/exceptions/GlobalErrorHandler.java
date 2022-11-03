@@ -14,4 +14,11 @@ public class GlobalErrorHandler {
     String invalidValidation( ValidationException ex ){
         return "The validation failed: " + ex.getName() + " has an error: " + ex.getErrorType();
     }
+
+    @ExceptionHandler( AreaHasCustomizationException.class )
+    @ResponseBody
+    @ResponseStatus( HttpStatus.CONFLICT )
+    String invalidAreaHasCustomization( AreaHasCustomizationException ex ){
+        return "The validation failed: " + ex.getName() + " has an error: " + ex.getErrorType();
+    }
 }
