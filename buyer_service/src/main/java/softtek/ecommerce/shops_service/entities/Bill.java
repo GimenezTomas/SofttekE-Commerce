@@ -38,9 +38,8 @@ public class Bill {
         this.route = route;
     }
 
-    public boolean generate(DTOBillData data) {
-        BillGeneratorAdapter billGeneratorAdapter = new BillGeneratorAdapter();
-        this.route = billGeneratorAdapter.generate( data );
+    public boolean generate(DTOBillData data, BillGenerator billGenerator ) {
+        this.route = billGenerator/*Adapter*/.generate( data );
         return this.route != null ? true : false;
     }
 }

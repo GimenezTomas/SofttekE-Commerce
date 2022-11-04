@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import softtek.ecommerce.shops_service.entities.Bill;
+import softtek.ecommerce.shops_service.entities.BillGeneratorAdapter;
 import softtek.ecommerce.shops_service.entities.Order;
 import softtek.ecommerce.shops_service.entities.State;
 import softtek.ecommerce.shops_service.entities.dtos.DTOBillData;
@@ -53,9 +54,10 @@ public class BillsController {
             return new ResponseEntity<>("The order does not exists, was deleted or it's no longer in GENERATED status", HttpStatus.CONFLICT);
 
 
-        optionalOrder.get().billRecived(bill.generate(dtoBillData));
+        optionalOrder.get().billRecived(bill.generate(dtoBillData, new BillGeneratorAdapter()));
         optionalOrder.get().setBill(bill); //TODO
 
+        repo.save( bill );
         ordersRepo.save( optionalOrder.get() );
 
         return ResponseEntity.ok().build();

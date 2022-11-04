@@ -35,7 +35,7 @@ public class AreasHasCustomizationsService {
 
             //VERIFICO QUE EXISTA, ESTE ACTIVO, ESTAS CUSTOMIZACIONES LE PERTENEZCAN A LA TIENDA EN CUESTION Y QUE EL USUARIO SEA EL DUEÑO DE LA TIENDA
             if ( !areaHasCustomizationOptional.isPresent() || !areaHasCustomizationOptional.get().getCustomization().getActive() || !areaHasCustomizationOptional.get().getCustomization().getShop().getIdShop().equals(dtoCustomizatedProduct.getIdShop()) || !areaHasCustomizationOptional.get().getCustomization().getShop().getIdUser().equals(idCurrentUser) ){
-                throw new AreaHasCustomizationException("The areaHasCustomization does not exists ","");
+                throw new AreaHasCustomizationException("The areaHasCustomization does not exists, was deleted or you are not the owner ","");
             }
 
             //CREO EL OBJETO JSON CON EL CUSTOMIZATIONTYPE Y CUSTOMIZATIONAREA

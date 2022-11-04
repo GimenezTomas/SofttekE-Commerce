@@ -7,6 +7,7 @@ import lombok.Setter;
 import softtek.ecommerce.shops_service.entities.AreaHasCustomizationId;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 
 @Getter
@@ -20,6 +21,6 @@ public class DTOCustomizatedProduct {
     private String idBaseProduct;
     @NotBlank
     private String idShop;
-
+    @NotNull
     private ArrayList<AreaHasCustomizationId> areaHasCustomizationIds;
 }

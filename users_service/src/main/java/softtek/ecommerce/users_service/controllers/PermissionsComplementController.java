@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import softtek.ecommerce.users_service.entities.Permission;
 import softtek.ecommerce.users_service.entities.Role;
 import softtek.ecommerce.users_service.entities.dtos.DTOPermission;
@@ -56,17 +53,17 @@ public class PermissionsComplementController {
     }
 
     @Transactional
-    @PutMapping("roles/{idRole}/remove_permission")
-    @ResponseBody ResponseEntity<Object> removePermission( @PathVariable( value = "idRole" ) String idRole, @RequestBody DTOPermission permissionReq ) throws Exception {
-        roleValidationService.validation(permissionReq.getIdCurrentUser(), "MANEJAR_PERMISOS");
+    @PutMapping("roles/{idRole}/remove_permission/{idPermission}")
+    @ResponseBody ResponseEntity<Object> removePermission( @PathVariable( value = "idRole" ) String idRole, @PathVariable( value = "idPermission" ) String idPermission, @RequestParam String idCurrentUser ) throws Exception {
+        roleValidationService.validation(idCurrentUser, "MANEJAR_PERMISOS");
             //return new ResponseEntity<Object>("Current user has a problem", HttpStatus.CONFLICT);
 
-        Optional<Permission> permissionOptional = permissionsRepo.findById(permissionReq.getIdPermission());
+        Optional<Permission> permissionOptional = permissionsRepo.findById(idPermission);
         Optional<Role> roleOptional = rolesRepo.findById(idRole);
         String requiredPermission = "MANEJAR_PERMISOS";
 
         if ( !permissionOptional.isPresent() )
-            return new ResponseEntity<Object>("The permission with id " + permissionReq.getIdPermission() + " does not exists!", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Object>("The permission with id " + idPermission + " does not exists!", HttpStatus.NOT_FOUND);
 
         if ( !roleOptional.isPresent() )
             return new ResponseEntity<Object>("The role with id " + idRole + " does not exists!", HttpStatus.NOT_FOUND);
