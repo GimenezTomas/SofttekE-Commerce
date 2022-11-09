@@ -4,6 +4,3 @@
 		MIN 1:58 Toca temas excepciones
 
 1:47
-
-problemas:
-	1) EN transactional tnego que usar el save igualmente xq cuando agrego un permiso no me lo guarda
