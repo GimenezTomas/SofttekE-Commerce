@@ -1,7 +1,1 @@
-2) Implementar test
-3) Ver de cambiar findById por findByIdAndActive
-4) Usar un controllador complementario o un servicio
-7) Investigar si hay que usar el save en @transactional
-9) Hacer que los get y set sean seguros ( lo explico sosa y lo hiciste en usersservice creooo)
-13) hacer en repos metodos que busquen activos por id asi no hago el chequeo en el controlador
-1) hacer borrado post
+
